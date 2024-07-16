@@ -1,0 +1,29 @@
+#Kubernetes configured with securityContext for pods
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-pod
+  labels:
+    app: secure-app
+spec:
+  securityContext:
+    runAsUser: 1000           # The user ID to run the entrypoint of the container process
+    runAsGroup: 3000          # The primary group ID for running the container process
+    fsGroup: 2000             # The group ID for setting ownership of mounted volumes
+  containers:
+  - name: secure-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    securityContext:
+      allowPrivilegeEscalation: false # Prevents the container from gaining more privileges
+      capabilities:
+        drop:
+        - ALL             # Drop all capabilities
+      privileged: false   # Ensures the container is not running in privileged mode
+      readOnlyRootFilesystem: true # Makes the root filesystem read-only
+      runAsNonRoot: true  # Ensures the container runs as a non-root user
+      seccompProfile:
+        type: RuntimeDefault  # Enforces the use of a default seccomp profile
+      apparmorProfile: "runtime/default" # Enforces the use of a default AppArmor profile

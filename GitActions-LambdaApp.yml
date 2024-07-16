@@ -1,0 +1,63 @@
+---
+
+name: Deploy Python Lambda App with Linting & Testing
+
+# this section will trigger the workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # This job will run the latest version of Ubuntu
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4 # Check out the code most stable code from the github repo
+
+    - name: Set up Python
+      uses: actions/setup-python@v4 # Set up the Python environment with the most stable verson from git repo
+      with:
+        python-version: '3.12' # Using the lastest stable verion of python. 
+
+    - name: Install dependencies # Installs the necessary dependencies 
+      run: |
+        python -m venv venv
+        . venv/bin/activate
+        pip install -r requirements.txt
+
+
+    - name: Lint code # Linting to check for style issues
+      run: |
+        . venv/bin/activate
+        pip install pylint
+        pylint lambda_function.py
+
+    - name: Run tests # Runs the tests
+      run: |
+        . venv/bin/activate
+        pip install unittest
+        python -m unittest discover
+
+    - name: Package Lambda function # Package the Lambda function
+      run: |
+        mkdir -p build
+        cp lambda_function.py build/
+        cd build && zip -r function.zip .
+
+    - name: Authenicate to AWS # Using GitHub Secrets to securely authenicate to AWS
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Deploy to AWS Lambda #Deploy the Lambda function to AWS. Be sure to updat the path of the zip file. 
+      run: |
+        aws lambda update-function-code \
+          --function-name my-python-lambda \
+          --zip-file fileb://build/function.zip 
