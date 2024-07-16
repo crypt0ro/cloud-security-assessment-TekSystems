@@ -37,7 +37,7 @@
 
 #### Implement one of these practices in a Dockerfile and provide the code.
 
-[click here to view the Docker file](Dockerfile-Memcached)
+**[click here to view the Docker file](Dockerfile-Memcached)**
 
 
 
@@ -58,7 +58,7 @@ Network Policies in Kubernetes provide a way to enforce network segmentation and
 Pod Security Policies (PSP) are a cluster-level resource in Kubernetes that control security-sensitive aspects of the pod specification. PSPs define a set of conditions that a pod must meet to be accepted into the system, gives the ability to control things like privileges, and filesystem usage.
 
 #### Write a Kubernetes YAML configuration that includes securityContext settings for a pod.
-[click here for the kubernetes file](kubernetes-securityContext.yml)
+**[click here for the Kubernetes file](kubernetes-securityContext.yml)**
 
 
 
