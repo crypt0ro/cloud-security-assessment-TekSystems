@@ -3,9 +3,8 @@
 This repoistory contains the solutions, code, and documentation from the TEKSystems Cloud Security Specialist Challenge
 
 
-There are two markdown files created for **Parts 1 & 2** 
-There are 4 code files
-- Dockerfile
-- Kubernetes config with securityContext
-- Terraform file to automate deployment of webserver on AWS
-- Github Actions workflow that builds an AWS Lambda App
+There are two markdown files created for **Parts 1 & 2** and there are 4 code files
+- [Dockerfile](Dockerfile-Memcached)
+- [Kubernetes config with securityContext](kubernetes-securityContext.yml)
+- [Terraform file to automate deployment of webserver on AWS (Part 3)](webServerTeksystems.tf)
+- [Github Actions workflow that builds an AWS Lambda App](GitActions-LambdaApp.yml)
