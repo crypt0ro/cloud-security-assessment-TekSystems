@@ -37,7 +37,7 @@
 
 #### Implement one of these practices in a Dockerfile and provide the code.
 
-[link] (Dockerfile-Memcached)
+[link](Dockerfile-Memcached)
 
 
 
