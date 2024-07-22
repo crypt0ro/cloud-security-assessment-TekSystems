@@ -1,6 +1,12 @@
 # Use the official Memcached image from Docker Hub
 FROM memcached:latest
 
+# Create a non-root user
+RUN useradd -u 1001 memcacheduser
+
+# Switch to the non-root user
+USER memcacheduser
+
 # Expose the default Memcached port
 EXPOSE 11211
 
